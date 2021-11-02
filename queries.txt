@@ -1,0 +1,220 @@
+
+    Using COUNT, get the number of cities in the USA.
+SELECT COUNT(CountryCode) FROM city WHERE CountryCode='USA';
+274
+
+    Find out the population and life expectancy for people in Argentina.
+SELECT name, Population, LifeExpectancy FROM Country WHERE name='Argentina';
+Argentina	37032000	75.1
+
+    Using IS NOT NULL, ORDER BY, and LIMIT, which country has the highest life expectancy?
+SELECT Name, LifeExpectancy FROM Country WHERE LifeExpectancy IS NOT NULL 
+ORDER BY LifeExpectancy DESC LIMIT 1;
+Andorra	83.5
+
+    Using JOIN ... ON, find the capital city of Spain.
+
+SELECT co.Name, ci.Name FROM country co JOIN city ci ON ci.ID=co.capital WHERE co.Name='Spain';
+
+    Using JOIN ... ON, list all the languages spoken in the Southeast Asia region.
+
+SELECT co.Name, cl.Language FROM country co JOIN countrylanguage cl ON co.Code=cl.CountryCode 
+WHERE co.Region='Southeast Asia' ORDER BY Language;
+
+Myanmar	Chin
+Brunei	Chinese
+Thailand	Chinese
+Vietnam	Chinese
+Singapore	Chinese
+Cambodia	Chinese
+Malaysia	Chinese
+Malaysia	Dusun
+Brunei	English
+Malaysia	English
+Philippines	Hiligaynon
+Malaysia	Iban
+Philippines	Ilocano
+Indonesia	Javanese
+Myanmar	Kachin
+Myanmar	Karen
+Myanmar	Kayah
+Cambodia	Khmer
+Thailand	Khmer
+Vietnam	Khmer
+Thailand	Kuy
+Thailand	Lao
+Laos	Lao
+Laos	Lao-Soung
+Indonesia	Madura
+Philippines	Maguindanao
+Indonesia	Malay
+Brunei	Malay
+Thailand	Malay
+Malaysia	Malay
+Singapore	Malay
+Brunei	Malay-English
+Vietnam	Man
+Philippines	Maranao
+Vietnam	Miao
+Indonesia	Minangkabau
+Myanmar	Mon
+Laos	Mon-khmer
+Vietnam	Muong
+Vietnam	Nung
+Philippines	Pampango
+Philippines	Pangasinan
+Philippines	Pilipino
+East Timor	Portuguese
+Myanmar	Rakhine
+Myanmar	Shan
+Indonesia	Sunda
+East Timor	Sunda
+Singapore	Tamil
+Malaysia	Tamil
+Cambodia	TÂšam
+Thailand	Thai
+Laos	Thai
+Vietnam	Thai
+Vietnam	Tho
+Cambodia	Vietnamese
+Vietnam	Vietnamese
+Philippines	Waray-waray
+
+
+    Using a single query, list 25 cities around the world that start with the letter F.
+
+SELECT * FROM city WHERE name LIKE 'F%' LIMIT 25;
+54	Fagatogo	ASM	Tutuila	2323
+88	Florencio Varela	ARG	Buenos Aires	315432
+110	Formosa	ARG	Formosa	147636
+205	Francistown	BWA	Francistown	101805
+210	Fortaleza	BRA	CearÃ¡	2097757
+236	Feira de Santana	BRA	Bahia	479992
+269	Franca	BRA	SÃ£o Paulo	290139
+274	FlorianÃ³polis	BRA	Santa Catarina	281928
+280	Foz do IguaÃ§u	BRA	ParanÃ¡	259425
+357	Ferraz de Vasconcelos	BRA	SÃ£o Paulo	139283
+381	Francisco Morato	BRA	SÃ£o Paulo	121197
+398	Franco da Rocha	BRA	SÃ£o Paulo	108964
+684	Fuenlabrada	ESP	Madrid	171173
+1055	Faridabad	IND	Haryana	703592
+1143	Firozabad	IND	Uttar Pradesh	215128
+1157	Farrukhabad-cum-Fatehgarh	IND	Uttar Pradesh	194567
+1261	Faizabad	IND	Uttar Pradesh	124437
+1280	Fatehpur	IND	Uttar Pradesh	117675
+1471	Firenze	ITA	Toscana	376662
+1488	Foggia	ITA	Apulia	154891
+1492	Ferrara	ITA	Emilia-Romagna	132127
+1502	ForlÃ¬	ITA	Emilia-Romagna	107475
+1539	Fukuoka	JPN	Fukuoka	1308379
+1551	Funabashi	JPN	Chiba	545299
+1575	Fukuyama	JPN	Hiroshima	376921
+
+
+    Using COUNT and JOIN ... ON, get the number of cities in China.
+
+SELECT COUNT(ci.Name), co.Name FROM city ci JOIN country co ON ci.CountryCode=co.Code WHERE co.Name='China';
+363	China
+
+    Using IS NOT NULL, ORDER BY, and LIMIT, which country has the lowest population? Discard non-zero populations.
+SELECT Name, Population FROM Country WHERE Population IS NOT NULL ORDER BY Population LIMIT 10;
+
+    Using aggregate functions, return the number of countries the database contains.
+SELECT COUNT(Name) FROM country;
+
+
+    What are the top ten largest countries by area?
+SELECT Name, SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 10;
+Russian Federation	17075400.00
+Antarctica	13120000.00
+Canada	9970610.00
+China	9572900.00
+United States	9363520.00
+Brazil	8547403.00
+Australia	7741220.00
+India	3287263.00
+Argentina	2780400.00
+Kazakstan	2724900.00
+
+
+    List the five largest cities by population in Japan.
+
+SELECT ci.Name, ci.Population, co.Name FROM city ci JOIN country co ON ci.CountryCode=co.Code 
+WHERE co.Name='Japan' ORDER BY ci.Population DESC LIMIT 10;
+
+Tokyo	7980230	Japan
+Jokohama [Yokohama]	3339594	Japan
+Osaka	2595674	Japan
+Nagoya	2154376	Japan
+Sapporo	1790886	Japan
+Kioto	1461974	Japan
+Kobe	1425139	Japan
+Fukuoka	1308379	Japan
+Kawasaki	1217359	Japan
+Hiroshima	1119117	Japan
+
+
+    List the names and country codes of every country with Elizabeth II as its Head of State. You will need to fix the mistake first!
+UPDATE country SET HeadOfState = 'Elizabeth II' WHERE HeadOfState = 'Elisabeth II';
+
+SELECT Name, Code, HeadOfState FROM country WHERE HeadOfState='Elizabeth II';
+
+    List the top ten countries with the smallest population-to-area ratio. Discard any countries with a ratio of 0.
+SELECT Name, SurfaceArea % Population FROM country 
+WHERE SurfaceArea % Population IS NOT NULL
+ORDER BY SurfaceArea % Population 
+ASC LIMIT 10;
+
+Holy See (Vatican City State)	0.40
+Monaco	1.50
+Gibraltar	6.00
+Tokelau	12.00
+Cocos (Keeling) Islands	14.00
+Macao	18.00
+Nauru	21.00
+Tuvalu	26.00
+Norfolk Island	36.00
+Pitcairn	49.00
+
+
+
+    List every unique world language.
+SELECT DISTINCT Language FROM countrylanguage;
+
+    List the names and GNP of the world's top 10 richest countries.
+SELECT Name, GNP FROM country ORDER BY GNP DESC Limit 10;
+United States	8510700.00
+Japan	3787042.00
+Germany	2133367.00
+France	1424285.00
+United Kingdom	1378330.00
+Italy	1161755.00
+China	982268.00
+Brazil	776739.00
+Canada	598862.00
+Spain	553233.00
+
+
+    List the names of, and number of languages spoken by, the top ten most multilingual countries.
+SELECT c.name, COUNT(cl.language) AS num_of_languages 
+FROM country c 
+JOIN countrylanguage cl ON c.code=cl.countrycode 
+GROUP BY c.name ORDER BY COUNT(cl.language) DESC LIMIT 10;
+
+    List every country where over 50% of its population can speak German.
+
+    Which country has the worst life expectancy? Discard zero or null values.
+SELECT Name, LifeExpectancy FROM Country WHERE LifeExpectancy IS NOT NULL ORDER BY LifeExpectancy ASC LIMIT 1;
+Zambia	37.2
+
+    List the top three most common government forms.
+SELECT GovernmentForm FROM country GROUP BY GovernmentForm ORDER BY COUNT(Code) DESC LIMIT 3;
+Republic
+Constitutional Monarchy
+Federal Republic
+
+    How many countries have gained independence since records began?
+
+SELECT Name, IndepYear FROM country WHERE IndepYear IS NOT NULL;
+
+
